@@ -15,4 +15,11 @@ app.use(express.static("public"))   //files folder ayegenge usko handle krne k l
 app.use(cookieParser())     // server ke cookies read krn k liye
 
 
+// routes import 
+import userRouter  from './routes/user.routes.js'
+
+
+// routes declaration 
+app.use("/api/v1/users", userRouter)
+
 export {app}
