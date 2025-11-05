@@ -1,9 +1,9 @@
 // require("dotenv").config({path: './env'})
 import dotenv from "dotenv";
-
 import connectDB from "./db/index.js";
-
 dotenv.config({path: './env'})
+import express from "express";
+const app = express();
 
 connectDB()
 // DB async method me likha gya h isliye promise return krega usse tackle karne ke liye then-catch me app ko wrap kro
