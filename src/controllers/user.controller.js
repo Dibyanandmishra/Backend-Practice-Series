@@ -18,6 +18,8 @@ const registerUser = asyncHandler(async(req, res) => {
 
     // ***get user details from frontend***
     const {fullName, email, username, password}= req.body
+    console.log("email: ", email);
+    
     
     // ***validate -- not empty***
     // to handle single error
@@ -33,7 +35,7 @@ const registerUser = asyncHandler(async(req, res) => {
     }
 
     // ***check if user already exists: username, email***
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{username}, {email}]
     })
 
@@ -42,8 +44,8 @@ const registerUser = asyncHandler(async(req, res) => {
     }
 
     // ***provide local path to img and avatar and check for avatar***
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    const avatarLocalPath = req.files?.avatar?.[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
 
     if(!avatarLocalPath){
         throw new ApiError(400,"Avatar file is required")
@@ -77,12 +79,12 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new ApiError(500, "Something went wrong! While creating User")
     }
 
+    // ***return response***
+    return res.status(201).json(
+        new ApiResponse(201, createdUser, "User registered Successfully")
+    )
 }) 
 
-    // ***return response***
-return res.status(201).json(
-    new ApiResponse(200, createdUser, "User registered Successfully")
-)
 
 
 export {registerUser}
