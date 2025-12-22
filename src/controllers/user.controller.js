@@ -35,7 +35,7 @@ const registerUser = asyncHandler( async(req,res)=>{
 
   // get user details from frontend
   const {username, email, fullName, password } = req.body
-  console.log("email: ",email);
+  // console.log("email: ",email);
   
   // validation - not empty
   if(
@@ -177,17 +177,20 @@ const logoutUser = asyncHandler(async(req,res)=>{
 })
 
 const refreshAccessToken = asyncHandler(async(req,res)=>{
-  const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+  const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken
   if (!incomingRefreshToken) {
     new ApiError(401, "Can't find incomingRefreshToken")
   }
 
   try {
     const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+    if (!decodedToken) {
+      throw new ApiError(401, "Incoming_Refresh_Token_Secret doesn't match with the RefreshTokenSecret")
+    }
   
     const user = await User.findById(decodedToken?._id)
     if(!user){
-      throw new ApiError(401, "Invalid Refresh Token...check decodedToken")
+      throw new ApiError(401, "Invalid Refresh Token...check RefreshAccessToken field")
     }
   
     if(incomingRefreshToken !== user?.refreshToken){
