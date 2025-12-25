@@ -29,7 +29,7 @@ router.route("/current-user").get(verifyJWT,GetCurrentUser)
 router.route("/update-account").patch(verifyJWT,UpdateAccountDetails)
 
 router.route("/avatar").patch(verifyJWT,upload.single("avatar"), UpdateAvatar)
-router.route("/cover-Image").patch(verifyJWT, upload.single("/coverImage"), UpdateCoverImage)
+router.route("/cover-Image").patch(verifyJWT, upload.single("coverImage"), UpdateCoverImage)
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 router.route("/history").get(verifyJWT,getWatchHistory)
 
