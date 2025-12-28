@@ -98,7 +98,6 @@ const registerUser = asyncHandler( async(req,res)=>{
     new ApiResponse(200, createdUser,"User registered Successfully")
   )
 
-
 })
 
 const loginUser = asyncHandler(async(req,res)=>{
@@ -404,8 +403,9 @@ const getWatchHistory = asyncHandler(async(req,res)=>{
     $lookup: {
       from: "videos",
       localField: "watchHistory",
-      "foreignField": "_id",
+      foreignField: "_id",
       as: "watchHistory",
+
       pipeline: [
         {
         $lookup: {
@@ -413,6 +413,7 @@ const getWatchHistory = asyncHandler(async(req,res)=>{
           localField: "owner",
           foreignField: "_id",
           as: "owner",
+
           pipeline: [
             {
             $project: {
