@@ -34,7 +34,7 @@ This project supports **user authentication, video upload, subscriptions, likes,
 ---
 
 ## 📁 Project Structure
-
+```bash
 backend_chaiAurCode/
 │
 ├── public/
@@ -58,6 +58,7 @@ yaml
 Copy code
 
 ---
+```
 
 ## 🔐 Authentication Flow
 
@@ -160,8 +161,10 @@ Server will start at:
 arduino
 Copy code
 http://localhost:8000
-🧪 API Testing
-Use Postman
+```
+
+## 🧪 API Testing
+### Use Postman
 
 All protected routes require Bearer Token
 
@@ -169,7 +172,7 @@ File uploads must be sent using form-data
 
 Correct field names are required for multer uploads
 
-📌 Learning Outcome
+## 📌 Learning Outcome
 This project helped me learn:
 
 Real-world backend project structure
@@ -184,11 +187,11 @@ Centralized error handling
 
 Clean and scalable REST API design
 
-🙌 Acknowledgement
+## 🙌 Acknowledgement
 Inspired by Chai aur Code backend practices.
 This project is built purely for learning and practice purposes.
 
-👨‍💻 Author
+## 👨‍💻 Author
 Dibyanand
 CSE Student | Backend Developer
 🚀 Learning by building real-world projects
