@@ -4,7 +4,6 @@ import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 
-
 const createPlaylist = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
 
@@ -26,7 +25,6 @@ const createPlaylist = asyncHandler(async (req, res) => {
     new ApiResponse(201, playlist, "Playlist created successfully")
   )
 });
-
 
 const getUserPlaylists = asyncHandler(async (req, res) => {
     const {userId} = req.params
@@ -97,7 +95,6 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
   );
 });
 
-
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
 
@@ -156,7 +153,6 @@ const deletePlaylist = asyncHandler(async (req, res) => {
     new ApiResponse(200, {}, "Playlist deleted successfully")
   );
 });
-
 
 const updatePlaylist = asyncHandler(async (req, res) => {
   const {playlistId} = req.params

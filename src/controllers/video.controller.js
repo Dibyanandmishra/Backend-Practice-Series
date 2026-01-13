@@ -1,11 +1,9 @@
-import mongoose, {isValidObjectId} from "mongoose"
+import mongoose from "mongoose"
 import {Video} from "../models/videos.models.js"
-import {User} from "../models/users.models.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
-
 
 const getAllVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10, query, sortBy = "createdAt", sortType = "desc", userId } = req.query
@@ -35,14 +33,13 @@ const getAllVideos = asyncHandler(async (req, res) => {
     );
 });
 
-
 const publishAVideo = asyncHandler(async (req, res) => {
     const {title, description} = req.body
     if(!title || title?.trim() === ""){
         throw new ApiError(400, "Title is required")
     }
 
-    if(req.files?.videoFile?.length){
+    if(!req.files?.videoFile?.length){
         throw new ApiError(400, "Video is required")
     }
 
@@ -69,7 +66,6 @@ const publishAVideo = asyncHandler(async (req, res) => {
     );
 })
 
-
 const getVideoById = asyncHandler(async (req, res) => {
     const { videoId } = req.params
     if(!mongoose.Types.ObjectId.isValid(videoId)){
@@ -90,6 +86,7 @@ const getVideoById = asyncHandler(async (req, res) => {
 
 const updateVideoDetails = asyncHandler(async (req, res) => {
     const { videoId } = req.params
+    const { title, description } = req.body;
     if(!mongoose.Types.ObjectId.isValid(videoId)){
         throw new ApiError(400, "Video Id is invalid")
     }
@@ -107,7 +104,7 @@ const updateVideoDetails = asyncHandler(async (req, res) => {
     if (title?.trim()) updateData.title = title;
     if (description?.trim()) updateData.description = description;
 
-    if(req.files?.path){
+    if(req.file?.path){
         const thumbnailUploaded = await uploadOnCloudinary(req.files.path)
         if(!thumbnailUploaded?.url){
             throw new ApiError(500, "Thumbnail upload failed")
